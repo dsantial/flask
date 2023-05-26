@@ -1,6 +1,10 @@
+import os
 from flask import Flask, request, jsonify
+import openai
 
 app = Flask(__name__)
+
+openai.api_key = "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"
 
 @app.route('/')
 def hello_world():
@@ -15,9 +19,14 @@ def generate():
 
     prompt = data['prompt']
 
-    # TODO: Call GPT-4 API and count tokens
+    # Call GPT-4 API
+    response = openai.Completion.create(
+      engine="text-davinci-004",
+      prompt=prompt,
+      max_tokens=100
+    )
 
-    return jsonify({'prompt': prompt})
+    return jsonify({'response': response.choices[0].text.strip()})
 
 if __name__ == '__main__':
     app.run(debug=True)
