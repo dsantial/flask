@@ -4,7 +4,7 @@ import openai
 
 app = Flask(__name__)
 
-openai.api_key = "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"
+openai.api_key = "apikey"
 
 @app.route('/')
 def hello_world():
