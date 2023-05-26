@@ -1,13 +1,23 @@
-from flask import Flask, jsonify
-import os
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-
 @app.route('/')
-def index():
-    return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
+def hello_world():
+    return 'Hello, World!'
 
+@app.route('/generate', methods=['POST'])
+def generate():
+    data = request.get_json()
+
+    if 'prompt' not in data:
+        return jsonify({'error': 'No prompt provided'}), 400
+
+    prompt = data['prompt']
+
+    # TODO: Call GPT-4 API and count tokens
+
+    return jsonify({'prompt': prompt})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=os.getenv("PORT", default=5000))
+    app.run(debug=True)
